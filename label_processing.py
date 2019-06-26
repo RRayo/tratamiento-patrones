@@ -5,7 +5,7 @@ import sys
 
 detecciones = 'images_labeled.csv'
 data = "/home/rrayo/train2014"
-out_dir = "."
+out_dir = "./labels"
 
 try:
     detecciones = sys.argv[1]
@@ -35,7 +35,8 @@ with open(detecciones) as csv_file:
 
 # path a la carpeta con las imagenes donde se detecto objetos
 coco_path = Path(data)
-path = Path(".")
+path = Path(out_dir)
+path.mkdir(exist_ok=True)
 
 # copia las imagenes en la carpeta correspondiente a la clase asignada
 for l in label_dict.keys():
