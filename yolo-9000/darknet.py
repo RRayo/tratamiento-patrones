@@ -183,10 +183,13 @@ if __name__ == "__main__":
                 r = detect(net, meta, path_f)
                 print r
 
+                objetos = ""
+                for obj in r:
+                    objetos = objetos + obj[0] + ","
+
+                objetos = objetos[:-1]
+
                 # escribir los resultados en el archivo
                 with open(out_file, "a") as d:
-                    d.write(path_f)
-                    d.write("\n")
-                    d.write(str(r))
-                    d.write("\n")
+                    d.write(path_f.name + str("!#!") + objetos)
                     d.write("\n")
