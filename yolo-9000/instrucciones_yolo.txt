@@ -1,0 +1,22 @@
+git clone --recursive https://github.com/philipperemy/yolo-9000.git # clonar repositorio
+cd yolo-9000 # cambiar a la carpeta yolo
+cat yolo9000-weights/x* > yolo9000-weights/yolo9000.weights # copiar pesos de yolo
+md5sum yolo9000-weights/yolo9000.weights # d74ee8d5909f3b7446e9b350b4dd0f44  yolo9000.weights para verificar el archivo creado
+git submodule foreach git pull origin master # actualizar darknet
+cd darknet # cambiar a carpeta darknet
+make clean # borrar archivos compilados
+vim Makefile # Change the first two lines to: GPU=1 and CUDNN=1. cambiar el archivo para el soporte de uso de GPU
+make # compilar los archivos
+# correr ejemplo para probarlo
+./darknet detector test cfg/combine9k.data cfg/yolo9000.cfg ../yolo9000-weights/yolo9000.weights data/dog.jpg
+
+# si tira lo siguiente está bien:
+	Loading weights from ../yolo9000-weights/yolo9000.weights...Done!
+	data/dog.jpg: Predicted in 0.035112 seconds.
+	car: 70%
+	canine: 56%
+	bicycle: 57%
+	Not compiled with OpenCV, saving to predictions.png instead
+
+vim python/darknet.py # modificar el archivo para correr el detector en multiples imagenes (se adjunta archivo)
+python2 python/darknet.py # si tira seg fault correr el ejemplo del demo y correr el script de nuevo
