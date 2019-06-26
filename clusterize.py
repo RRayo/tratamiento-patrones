@@ -5,8 +5,13 @@ import sklearn.manifold
 import sklearn.cluster
 import pandas as pd
 
+word2vec_model_location = r"data/input/GoogleNews-vectors-negative300.bin"
+input_location = r'data/output/deteccion_preprocessed.txt'
+output_location = r'data/output/images_labeled.csv'
+clusterization_algorithm = sklearn.cluster.DBSCAN(eps=3)
+
 news = gensim.models.KeyedVectors.load_word2vec_format(
-    r"data/input/GoogleNews-vectors-negative300.bin", binary=True
+    word2vec_model_location, binary=True
     ) 
 
 def to_vector(words,model):
@@ -18,7 +23,7 @@ def to_vector(words,model):
 
 images = []
 objects = []
-with open(r'data/output/deteccion_preprocessed.txt') as file:
+with open(input_location) as file:
     for line in file:
         line = line.rstrip().split('!#!')
         image = line[0]
@@ -45,18 +50,18 @@ data_matrix = np.concatenate([objects_matrix,images_encoded,objects_encoded], ax
 
 data_matrix_without_nan = data_matrix[~np.isnan(data_matrix).any(axis=1)]
 
-tisni = sklearn.manifold.TSNE(verbose=True)
+# tisni = sklearn.manifold.TSNE(verbose=True)
 
-tisni.fit(data_matrix_without_nan[:,:300])
+# tisni.fit(data_matrix_without_nan[:,:300])
 
-debescan = sklearn.cluster.DBSCAN(eps=3)
-debescan.fit(tisni.embedding_)
+model = clusterization_algorithm
+model.fit(data_matrix_without_nan[:,:300])
 
 labeled_images = np.concatenate([data_matrix_without_nan[:,300:],
-                np.reshape(debescan.labels_, (-1, 1)),
+                np.reshape(model.labels_, (-1, 1)),
                ],axis=1).astype(int)
 labeled_images = pd.DataFrame(labeled_images, columns = ['image','objects','label'])
 labeled_images['image'] = label_encoder_images.inverse_transform(labeled_images.image)
 labeled_images['objects'] = label_encoder_objects.inverse_transform(labeled_images.objects)
 
-labeled_images.sort_values(by='label').to_csv('data/output/images_labeled.csv')
+labeled_images.sort_values(by='label').to_csv(output_location)
