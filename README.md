@@ -68,4 +68,4 @@ TODO
 
 * **Daniela Quenti**
 * **Fabián Villena**
-* **Raúl Rayo** :zap:
+* **Raúl Rayo**
