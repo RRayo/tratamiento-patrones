@@ -1,9 +1,12 @@
-<<<<<<< HEAD
-# tratamiento-patrones
+# Clusterizacion de Imagenes en funcion de la deteccion de objetos
 
+## Preámbulo
 Repo con el proyecto para los ramos CC5509-1 y CASDYTI-1.
 
-## Detectar objetos con YOLO
+## Pasos para reproducir el código
+
+
+### Detectar objetos con YOLO
 
 Correr YOLO9000 sobre un dataset propio:
 
@@ -53,20 +56,6 @@ Correr el detector:
 `python2 python/darknet.py` (si tira seg fault correr el ejemplo del demo y correr el script de nuevo)
 
 
-## Autores
-
-* **Daniela Quenti**
-* **Fabián Villena**
-* **Raúl Rayo**
-=======
-# Clusterizacion de Imagenes en funcion de la deteccion de objetos
-
-## Pasos para reproducir el código
-
-### Preámbulo
-TODO
-### Detección de Objetos
-TODO
 
 ### Clusterización
 Ejecutar el script `clusterize.py` que recibe el archivo generado en el paso anterior para posteriormente retornar un archivo de texto plano que contiene el nombre de cada imagen junto con el cluster al cual pertenece.
@@ -74,4 +63,9 @@ Asegúrese de haber descargado los arhivos del modelo de `Word2Vec` en el preám
 
 ### División de las Imágenes
 TODO
->>>>>>> 94572d2f61532dd80e7c3c86f612d40db23486c6
+
+## Autores
+
+* **Daniela Quenti**
+* **Fabián Villena**
+* **Raúl Rayo**
